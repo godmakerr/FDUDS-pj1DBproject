@@ -1,0 +1,14 @@
+﻿  pch.cpp
+  bserv.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\ranges(11): warning STL4038: The contents of <ranges> are available only with C++20 or later.
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\span(12): warning STL4038: The contents of <span> are available only with C++20 or later.
+  client.cpp
+  database.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\ranges(11): warning STL4038: The contents of <ranges> are available only with C++20 or later.
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\span(12): warning STL4038: The contents of <span> are available only with C++20 or later.
+  session.cpp
+  utils.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\ranges(11): warning STL4038: The contents of <ranges> are available only with C++20 or later.
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\span(12): warning STL4038: The contents of <span> are available only with C++20 or later.
+  正在生成代码...
+  bserv.vcxproj -> C:\Users\IScream\Downloads\bserv-main\bserv-main\x64\Debug\bserv.lib
