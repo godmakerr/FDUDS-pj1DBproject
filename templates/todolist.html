@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}To-do list{% endblock %}
+
+{% block users_active %}{% endblock %}
+{% block To_do_lists_active %}active{% endblock %}
+{% block content %}
+
+<script>
+  window.onload = function() {
+    var a = document.getElementById('skin');
+    a.style.backgroundImage = "url(/statics/bg4.jpg)";
+  };
+</script>
+
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Dish Name</th>
+        <th scope="col">Cuisine</th>
+        <th scope="col">Count</th>
+        <th scope="col">Orderer</th>
+        <th scope="col">Favor</th>
+        <th scope="col">Done</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ordered in ordereds %}
+      <form action="/tdset" method="post">
+        {% if exists("user") %}
+        <input type="hidden" name="setname" value="{{ordered.dname}}">
+        <input type="hidden" name="setuser" value="{{ordered.uname}}">
+        {% endif %}
+        <tr>
+          <th scope="row">{{ loop.index1 }}</th>
+          <td>{{ ordered.dname }}</td>
+          <td>{{ ordered.cname }}</td>
+          <td>{{ ordered.ocount }}</td>
+          <td>{{ ordered.uname }}</td>
+          <td>{{ ordered.is_favorite }}</td>
+          {% if exists("user") %}
+          <td><button class="btn btn-success" type="submit" formaction="/tddlt">Done</button></td>
+          {% endif %}
+        </tr>
+      </form>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
+z

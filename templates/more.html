@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block home_active %}active{% endblock %}
+
+{% block content %}
+<script>
+  window.onload = function() {
+    var a = document.getElementById('skin');
+    a.style.backgroundImage = "url(/statics/bg.jpg)";
+  };
+</script>
+
+<div class="p-5 mb-4 bg-light rounded-3">
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">About Cuisine</h1>
+    {% for more in mores %}
+      <div class="mb-4">
+        <h2 class="display-5 fw-bold text-warning">{{more.cname}}</h2>
+        <h5 class="display-6 fw-bold">Area: <span class="text-secondary">{{more.area}}</span></h5>
+        <p class="col-md-8 fs-4 text-dark">{{more.message}}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="row align-items-md-stretch">
+  <div class="col-md-6">
+    <div class="h-100 p-5 bg-dark text-white rounded-3">
+      <h2 class="text-primary">Samples</h2>
+      {% for more in mores %}
+        <p>{{more.sample}}</p>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="h-100 p-5 bg-light border rounded-3">
+      <h2 class="text-primary">Dish in Menu</h2>
+      {% for dish in dishs %}
+        <p><span class="text-dark">{{dish.dishname}}</span></p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

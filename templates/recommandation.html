@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}Recommandation{% endblock %}
+
+{% block users_active %}{% endblock %}
+{% block recommandation_active %}active{% endblock %}
+{% block profile_active %}active{% endblock %}
+{% block content %}
+
+<script>
+  window.onload = function() {
+    var a = document.getElementById('skin');
+    a.style.backgroundImage = "url(/statics/bg6.jpg)";
+  };
+</script>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="p-5 text-white bg-dark rounded-3">
+        <h2>Your Favorite Cuisine is:</h2>
+        {% for cuisine in rec1_cuisine %}
+          <h4>{{cuisine.cname}}</h4>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="p-5 text-white bg-dark rounded-3">
+        <h2>Your Favorite Spiciness Level is:</h2>
+        {% for spiciness in rec2_spiciness %}
+          <h4>{{spiciness.spiciness}}</h4>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead class="bg-dark text-white">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Dish Name(Not Ordered)</th>
+              <th scope="col">Cuisine</th>
+              <th scope="col">Spiciness Level</th>
+              <th scope="col">Price (CNY)</th>
+              <th scope="col">ID</th>
+              <th scope="col">Order</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for menu in rec1s %}
+            <form action="/order" method="post">
+              {% if exists("user") %}
+              <input type="hidden" name="colname" value="{{menu.dishname}}">
+              <input type="hidden" name="coluser" value="{{user.username}}">
+              <input type="hidden" name="colcuisine" value="{{menu.cname}}">
+              <input type="hidden" name="colprice" value="{{menu.price}}">
+              {% endif %}
+              <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ menu.dishname }}</td>
+                <td>{{ menu.cname }}</td>
+                <td>{{ menu.spiciness }}</td>
+                <td>{{ menu.price }}</td>
+                <td>{{menu.id}}</td>
+                {% if exists("user") %}
+                <td><button class="btn btn-primary btn-sm" type="submit">Order</button></td>
+                {% endif %}
+              </tr>
+            </form>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead class="bg-dark text-white">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Dish Name(Not Ordered)</th>
+              <th scope="col">Cuisine</th>
+              <th scope="col">Spiciness Level</th>
+              <th scope="col">Price (CNY)</th>
+              <th scope="col">ID</th>
+              <th scope="col">Order</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for menu in rec2s %}
+            <form action="/order" method="post">
+              {% if exists("user") %}
+              <input type="hidden" name="colname" value="{{menu.dishname}}">
+              <input type="hidden" name="coluser" value="{{user.username}}">
+              <input type="hidden" name="colcuisine" value="{{menu.cname}}">
+              <input type="hidden" name="colprice" value="{{menu.price}}">
+              {% endif %}
+              <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ menu.dishname }}</td>
+                <td>{{ menu.cname }}</td>
+                <td>{{ menu.spiciness }}</td>
+                <td>{{ menu.price }}</td>
+                <td>{{menu.id}}</td>
+                {% if exists("user") %}
+                <td><button class="btn btn-primary btn-sm" type="submit">Order</button></td>
+                {% endif %}
+              </tr>
+            </form>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="p-5 text-white bg-dark rounded-3">
+      <h2>Your Favor</h2>
+    </div>
+  </div>
+  
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead class="bg-dark text-white">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Dish Name</th>
+              <th scope="col">Cuisine</th>
+              <th scope="col">Spiciness Level</th>
+              <th scope="col">Price (CNY)</th>
+              <th scope="col">ID</th>
+              <th scope="col">Order</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for menu in rec3s %}
+            <form action="/order" method="post">
+              {% if exists("user") %}
+              <input type="hidden" name="colname" value="{{menu.dishname}}">
+              <input type="hidden" name="coluser" value="{{user.username}}">
+              <input type="hidden" name="colcuisine" value="{{menu.cname}}">
+              <input type="hidden" name="colprice" value="{{menu.price}}">
+              {% endif %}
+              <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ menu.dishname }}</td>
+                <td>{{ menu.cname }}</td>
+                <td>{{ menu.spiciness }}</td>
+                <td>{{ menu.price }}</td>
+                <td>{{menu.id}}</td>
+                {% if exists("user") %}
+                <td><button class="btn btn-primary btn-sm" type="submit">Order</button></td>
+                {% endif %}
+              </tr>
+            </form>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

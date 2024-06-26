@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Ordered{% endblock %}
+
+{% block users_active %}{% endblock %}
+{% block ordered_active %}active{% endblock %}
+{% block content %}
+
+
+<script>
+  window.onload = function() {
+    var a = document.getElementById('skin');
+    a.style.backgroundImage = "url(/statics/bg2.jpg)";
+  };
+</script>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">DishName</th>
+      <th scope="col">Cuisine</th>
+      <th scope="col">Count</th>
+      <th scope="col">Orderer</th>
+      <th scope="col">MyFavor</th>
+      <th scope="col">Favor/Not</th>
+      <th scope="col">Add</th>
+      <th scope="col">Reset</th>
+      <th scope="col">Cancel</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ordered in ordereds %}
+    <form action="/set" method="post">
+      {% if exists("user") %}
+        <input type="hidden" name="setname" value="{{ordered.dname}}">
+        <input type="hidden" name="setuser" value="{{user.username}}">
+      {% endif %}
+      <tr style="vertical-align: middle;">
+        <th scope="row">{{ loop.index1 }}</th>
+        <td>{{ ordered.dname }}</td>
+        <td>{{ ordered.cname }}</td>
+        <td>{{ ordered.ocount }}</td>
+        <td>{{ ordered.uname}}</td>
+        <td>{{ ordered.is_favorite }}</td>
+
+      {% if exists("user") %}
+        <td><button class="btn btn-danger" type="submit">SET</button></td>
+        <td><button class="btn btn-warning" type="submit" formaction="/play">Add</button></td>
+        <td><button class="btn btn-primary" type="submit" formaction="/clear">Reset</button></td>
+        <td><button class="btn btn-success" type="submit" formaction="/dlt">Cancel</button></td>
+      {% endif %}
+      </tr>
+    </form>
+    {% endfor %}
+  </tbody>
+</table>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th id="totalPriceHeader" scope="col" style="color: red; font-weight: bold; text-transform: uppercase; font-size: 16px; text-align: center;">Total Price(CNY)</th>
+      <th scope="col" style="text-align: right;">
+        <input type="checkbox" id="paidCheckbox" onchange="changeTotalPriceColor(this)">
+        <label for="paidCheckbox">Paid</label>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for price in prices %}
+      <tr style="vertical-align: middle;">
+        <td id="totalPriceCell" style="text-align: center;color: red;">{{ price.total_price }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+  function changeTotalPriceColor(checkbox) {
+    var totalPriceCell = document.getElementById("totalPriceCell");
+    var totalPriceHeader = document.getElementById("totalPriceHeader");
+    if (checkbox.checked) {
+      totalPriceCell.style.color = "green";
+      totalPriceHeader.style.color = "green";
+    } else {
+      totalPriceCell.style.color = "red";
+      totalPriceHeader.style.color = "red";
+    }
+  }
+</script>
+
+{% endblock %}

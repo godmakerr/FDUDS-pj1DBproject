@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Restaurant - {% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/statics/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    
+  </head>
+
+
+  <body id="skin" >
+    
+    
+<main>
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Home Page</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+
+          <li class="nav-item">
+            <a class="nav-link {% block users_active %}{% endblock %}" href="/users">Users</a>
+          </li>
+            <a class="nav-link {% block menu_active %}{% endblock %}" href="/menu">Menu</a>
+          {% if exists("user") %}  
+            <form action="/ordered" method="post">
+              <input type="hidden" name="setuser" value="{{user.username}}">
+              <button class="btn btn-outline-light {% block ordered_active %}{% endblock %}" onclick="window.location.href='/ordered'">Ordered</button> 
+            </form>
+            <form action="/rec" method="post">
+              <input type="hidden" name="setuser" value="{{user.username}}">
+              <button class="btn btn-outline-light {% block recommandation_active %}{% endblock %}" onclick="window.location.href='/rec'">Recommandation</button> 
+            </form>
+
+            {% if user.is_superuser==true %}
+            <form action="/todolist" method="post">
+              <input type="hidden" name="setuser" value="{{user.username}}">
+              <button class="btn btn-outline-light {% block To_do_lists_active %}{% endblock %}" onclick="window.location.href='/todolist'">To-do list</button> 
+            </form>
+            {% else %}
+            <td><button class="btn btn-outline-light" type="button" disabled>No Permission</button> </td> 
+            {% endif %}
+          {% endif %}
+        </ul>
+        {% if exists("user") %}
+        <ul class="navbar-nav mb-2 mb-md-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
+            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="dropdown07XL">
+              <li><a class="dropdown-item" href="/form_logout">Logout</a></li>
+              <li>
+                  <form action="/rec" method="post">
+                      <input type="hidden" name="setuser" value="{{ user.username }}">
+                      <button class="dropdown-item {% block profile_active %}{% endblock %}" type="submit">Profile</button> 
+                  </form>
+              </li>
+          </ul>
+          </li>
+        </ul>
+        {% else %}
+        <form class="d-flex" method="post" action="/form_login">
+          <input class="form-control me-2" type="text" name="username" placeholder="Username" aria-label="Username">
+          <input class="form-control me-2" type="password" name="password" placeholder="Password" aria-label="Password">
+          <button class="btn btn-outline-success" type="submit">Login</button>
+        </form>
+        {% endif %}
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">
+  sign up
+</button>
+
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" action="/form_add_user">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userModalLabel">sign up</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+          </div>
+          <div class="mb-3">
+            <label for="first_name" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name">
+          </div>
+          <div class="mb-3">
+            <label for="last_name" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+          {% if exists("user") %} 
+            {% if user.is_superuser==true %}
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="superuser" name="superuser" value="true" >Staff
+                <label class="form-check-label" for="superuser"></label>
+              </div>
+            {% endif %}
+          {% endif %}
+          
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Sign up</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+      </div>
+    </div>
+  </nav>
+
+  {% if exists("message") %}
+    {% if exists("success") %}
+      {% if success %}
+      <div class="alert alert-success" role="alert">
+        {{ message }}
+      </div>
+      {% else %}
+      <div class="alert alert-danger" role="alert">
+        {{ message }}
+      </div>
+      {% endif %}
+    {% else %}
+    <div class="alert alert-primary" role="alert">
+      {{ message }}
+    </div>
+    {% endif %}
+  {% endif %}
+
+  <div class="container py-4">
+
+    {% block content %}{% endblock %}
+
+  </div>
+</main>
+
+
+<script type="text/javascript">
+  ! function (e, t, a) {
+     function r() {
+         for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[
+                 e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x +
+             "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e]
+             .scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+         requestAnimationFrame(r)
+     }
+
+     function n() {
+         var t = "function" == typeof e.onclick && e.onclick;
+         e.onclick = function (e) {
+             t && t(), o(e)
+         }
+     }
+
+     function o(e) {
+         var a = t.createElement("div");
+         a.className = "heart", s.push({
+             el: a,
+             x: e.clientX - 5,
+             y: e.clientY - 5,
+             scale: 1,
+             alpha: 1,
+             color: c()
+         }), t.body.appendChild(a)
+     }
+
+     function i(e) {
+         var a = t.createElement("style");
+         a.type = "text/css";
+         try {
+             a.appendChild(t.createTextNode(e))
+         } catch (t) {
+             a.styleSheet.cssText = e
+         }
+         t.getElementsByTagName("head")[0].appendChild(a)
+     }
+
+     function c() {
+         return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math
+             .random()) + ")"
+     }
+     var s = [];
+     e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e
+         .mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+             setTimeout(e, 1e3 / 60)
+         }, i(
+             ".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"
+         ), n(), r()
+ }(window, document);
+</script>
+
+  <script src="/statics/js/bootstrap.bundle.min.js"></script>
+    
+  </body>
+</html>

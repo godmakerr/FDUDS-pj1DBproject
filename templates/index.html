@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block home_active %}active{% endblock %}
+
+{% block content %}
+<script>
+    window.onload = function() {
+      var a = document.getElementById('skin');
+      a.style.backgroundImage = "url(/statics/bg3.jpg)";
+    };
+</script>
+<div class="container-fluid">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <img src="/statics/home.jpg" class="img-fluid align-self-stretch" alt="Home Image" style="transform: scale(1.35);">
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow-lg mt-5 rounded">
+                        <div class="card-body">
+                            {% if exists("user") %}
+                                {% if user.is_superuser %}
+                                    <h1 class="display-5 fw-bold text-center text-success">Hello, Staff</h1>
+                                {% else %}
+                                    <h1 class="display-5 fw-bold text-center text-primary">Hello, Member</h1>
+                                {% endif %}
+                            {% else %}
+                                <h1 class="display-5 fw-bold text-center text-danger">Hello, Visitor</h1>
+                            {% endif %}
+                            <p class="fs-4 text-center">Welcome to our restaurant! Browse our menu and place your order.</p>
+                            <p class="fs-4 text-center">If you register and log in, you can enjoy our delicious foods!</p>
+                            <div class="text-center">
+                                <a class="btn btn-primary btn-lg mt-3" href="/menu">Browse Menu & Place Order</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-between">
+                        <div class="card shadow rounded border-success flex-fill mr-2">
+                            <div class="card-body">
+                                <h2 class="text-center text-success">Enjoy More</h2>
+                                <p class="text-center">Once logged in, unlock additional features like recommendations. Let's get started!</p>
+                                <div class="text-center">
+                                    {% if exists("user") %}
+                                        <form action="/rec" method="post">
+                                            <input type="hidden" name="setuser" value="{{user.username}}">
+                                            <button class="btn btn-success" type="submit">Get Recommendation</button> 
+                                        </form>
+                                    {% else %}
+                                        <button class="btn btn-outline-secondary" disabled>No Permission</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card shadow rounded border-info flex-fill ml-2">
+                            <div class="card-body">
+                                <h2 class="text-center text-info">Register</h2>
+                                <p class="text-center">Looking for more benefits? Register now to create your own account and start enjoying our delicious foods!</p>
+                                <div class="text-center">
+                                    <a class="btn btn-info" href="/" data-bs-toggle="modal" data-bs-target="#userModal">Register Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
